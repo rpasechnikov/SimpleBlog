@@ -11,13 +11,12 @@ namespace SimpleBlog
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            // .axd extension is files that dont actually exist on file system but used for debugging
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            // Name is Home, route is blank - so that default route goes to home page
+            // Controller is a class, action is a method
+            routes.MapRoute("Home", "", new { controller = "Posts", action = "Index" });
         }
     }
 }
