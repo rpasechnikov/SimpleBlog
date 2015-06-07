@@ -1,5 +1,6 @@
 ﻿using SimpleBlog.ViewModels;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SimpleBlog.Controllers
 {
@@ -17,24 +18,40 @@ namespace SimpleBlog.Controllers
         /// <summary>
         /// Handles POST login action
         /// </summary>
-        /// <param name="aForm"></param>
-        /// <returns></returns>
+        /// <param name="form">The Login form</param>
+        /// <param name="returnUrl">(Special param/convention/reserved) to get possible returnUrl - 
+        /// a URL from which this page was redirected from, if any</param>
+        /// <returns>View to display</returns>
         [HttpPost]
-        public ActionResult Login(AuthLogin aForm)
+        public ActionResult Login(AuthLogin form, string returnUrl)
         {
             // IsValid ensures that all Required fields have been populated
             if(!ModelState.IsValid)
             {
-                return View(aForm);
+                return View(form);
             }
 
-            if(aForm.Username != "error")
+            // Authentication - tells ASP.NET who this person is
+            FormsAuthentication.SetAuthCookie(form.Username, true);
+
+            if(!string.IsNullOrWhiteSpace(returnUrl))
             {
-                ModelState.AddModelError("Username", "Username or password is invalid!");
-                return View(aForm);
+                return Redirect(returnUrl);
             }
+            else
+            {
+                return RedirectToRoute("home");
+            }
+        }
 
-            return Content("The form is valid!");
+        /// <summary>
+        /// Logs the current user out
+        /// </summary>
+        /// <returns>Redirects to home view</returns>
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToRoute("home");
         }
     }
 }

@@ -16,6 +16,7 @@ namespace SimpleBlog
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("Login", "login", new { controller = "Auth", action = "Login" }, namespaces);
+            routes.MapRoute("Logout", "logout", new { controller = "Auth", action = "Logout" }, namespaces);
 
             // Name is Home, url is blank - so that default (no extra url params) route goes to home page
             // Controller is a class, action is a method
