@@ -1,4 +1,6 @@
-﻿
+﻿@using System.Web.Optimization
+
+
 @{
     Layout = null;
 }
@@ -6,40 +8,45 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title - Simple Blog</title>
-</head>
-<body>
-    <header>
-        <h1>
-            <a href="@Url.RouteUrl("home")">Simple Blog</a>
-        </h1>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title - Simple Blog</title>
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            <p>Welcome back, @User.Identity.Name</p>
-            <a href="@Url.RouteUrl("logout")">Logout</a>
+        @Styles.Render("~/styles")
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="@Url.RouteUrl("home")">Simple Blog</a>
 
-            if (User.IsInRole("admin"))
+                <i class="glyphicon glyphicon-bell"></i>
+            </h1>
+
+            @if (User.Identity.IsAuthenticated)
             {
-                // Go to the Index action of the Posts controller in the Admin area
-                <a href="@Url.Action("index", "Posts", new { area = "admin" })">View posts in admin</a>
+                <p>Welcome back, @User.Identity.Name</p>
+                <a href="@Url.RouteUrl("logout")">Logout</a>
+
+                if (User.IsInRole("admin"))
+                {
+                    // Go to the Index action of the Posts controller in the Admin area
+                    <a href="@Url.Action("index", "Posts", new { area = "admin" })">View posts in admin</a>
+                }
             }
-        }
-        else
-        {
-            <a href="@Url.RouteUrl("login")">Login</a>
-        }
-    </header>
+            else
+            {
+                <a href="@Url.RouteUrl("login")">Login</a>
+            }
+        </header>
 
-    <!-- Renders the Views with RenderBody -->
-    @RenderBody();
+        <!-- Renders the Views with RenderBody -->
+        @RenderBody();
 
-    <footer>
-        &copy; @DateTime.UtcNow.Year - Me
-    </footer>
+        <footer>
+            &copy; @DateTime.UtcNow.Year - Me
+        </footer>
 
-    @RenderSection("Scripts", false);
-</body>
+        @Scripts.Render("~/scripts")
+        @RenderSection("Scripts", false)
+    </body>
 </html>
