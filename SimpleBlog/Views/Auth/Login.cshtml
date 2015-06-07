@@ -1,7 +1,27 @@
-﻿@{
+﻿@model SimpleBlog.ViewModels.AuthLogin
+
+@{
     // ViewBag is dynamic, so can set any property name to any value,
     // as long as it's accessed in a similar way later - it will just work
     ViewBag.Title = "Login";
 }
 
-<p>This is the login view!</p>
+<!--Using ASP.NET MVC to build authentication form-->
+@using (Html.BeginForm())
+{
+    // Ensures that all Required fields are populated and displays a message otherwise
+    @Html.ValidationSummary()
+
+    <div>
+        <!--Generating labels and text boxes from strongly typed ViewModel Properties-->
+        @Html.LabelFor(x => x.Username)
+        @Html.EditorFor(x => x.Username)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Password)
+        @Html.EditorFor(x => x.Password)
+    </div>
+    <div>
+        <input type="submit" value="login" />
+    </div>
+}

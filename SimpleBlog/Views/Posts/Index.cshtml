@@ -3,22 +3,3 @@
     // as long as it's accessed in a similar way later - it will just work
     ViewBag.Title = "Posts";
  }
-
-<!--Definition for "Scripts" section-->
-@section Scripts
-{
-    <script>
-        alert("Hi!");
-    </script>
-}
-
-<h1>Posts Index</h1>   
-        
-<p>
-    <a href="@Url.RouteUrl("login")">Click here</a> to login!
-</p> 
-
-<p>
-    @Html.RouteLink("Click here", "login") to login!
-</p>
-
